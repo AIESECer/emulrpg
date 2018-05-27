@@ -1,0 +1,138 @@
+
+<link href="../style1.css" rel="stylesheet" type="text/css" />
+<p class="Contenu_Titre2">Nom de la carte sur l'ecran : </p>
+<p><span class="Contenu_Titre3">Fonction :</span><span class="Contenu_Texte">Affiche le nom de la carte un court instant sur l'ecran</span>.</p>
+<p><span class="Contenu_Titre3">Installation : </span><span class="Contenu_Texte">ouvrez l'editeur de script (F11) et crreez un nouveau script au dessus de main (clique droit sur main puis nouveau script) et noimmez le 'Window_Map_Name' .</span> </p>
+<p class="Contenu_Titre3">Le Script: </p>
+<p class="Contenu_Texte">#===========================================<br />
+  #   &#129;&iexcl;   Window_Map_Name<br />
+#------------------------------------------------------------------------------<br />
+class   Window_Map_Name &lt; Window_Base<br />
+&nbsp; attr_accessor :text<br />
+<br />
+&nbsp;   #--------------------------------------------------------------------------<br />
+&nbsp;   # &#129;&oelig; &fnof;I&fnof;u&fnof;W&fnof;F&fnof;N&fnof;g&#143;&permil;&Scaron;&uacute;<br />
+&nbsp;   #--------------------------------------------------------------------------<br />
+&nbsp;   def initialize<br />
+&nbsp;&nbsp;&nbsp; &nbsp;super(8, -8, 640, 64)<br />
+&nbsp;&nbsp;&nbsp; self.contents =   Bitmap.new(self.width - 32, self.height - 32)<br />
+&nbsp;&nbsp;&nbsp; self.contents.font.name =   &quot;Arial&quot;<br />
+&nbsp;&nbsp;&nbsp; @align = 1<br />
+&nbsp;&nbsp;&nbsp; @showing_time = -1<br />
+&nbsp;&nbsp;&nbsp; @text_color&nbsp; &nbsp;=   Color.new(255, 255, 0, 255)<br />
+&nbsp; end<br />
+&nbsp;   #--------------------------------------------------------------------------<br />
+&nbsp;   #<br />
+&nbsp;   #--------------------------------------------------------------------------<br />
+&nbsp;   def set_text(text, align = 2)<br />
+&nbsp;&nbsp;&nbsp; if text != <span lang="EN-GB" xml:lang="EN-GB">@text   or align != @align<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; @text = text<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; @align = align<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; if   text.empty? or text =~ /^\./<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; @showing_time = -1<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;   self.contents_opacity = 0<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; self.visible = false<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;   else<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; @showing_time = 100<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; self.contents_opacity =   255<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; self.visible = true<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; self.contents.clear<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; x =   4<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; y = 0<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; width = self.contents.width - 8<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; str =   &quot;- &quot;+@text+&quot; -&quot;<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; self.contents.font.color = Color.new(&nbsp; 0,&nbsp; 0,&nbsp; 0,   192)<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; self.contents.draw_text(x+2, y+2, width, 32, str,   @align)<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; self.contents.font.color = Color.new( 64, 64, 64,   192)<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; self.contents.draw_text(x-1, y-1, width, 32, str,   @align)<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; self.contents.draw_text(x+1, y-1, width, 32, str,   @align)<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; self.contents.draw_text(x-1, y+1, width, 32, str,   @align)<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; self.contents.draw_text(x+1, y+1, width, 32, str,   @align)<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; self.contents.font.color = @text_color<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;   self.contents.draw_text(x,&nbsp; &nbsp;y,&nbsp; &nbsp;width, 32, str, @align)<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; end<br />
+&nbsp;&nbsp;&nbsp;   end<br />
+&nbsp; end<br />
+&nbsp;   #--------------------------------------------------------------------------<br />
+&nbsp;   # &#129;&oelig; &#141;&Auml;&bull;`&permil;&aelig;<br />
+&nbsp;   #--------------------------------------------------------------------------<br />
+&nbsp;   def update<br />
+&nbsp;&nbsp;&nbsp; return if @showing_time &lt; 0<br />
+&nbsp;&nbsp;&nbsp; @showing_time -=   1<br />
+&nbsp;&nbsp;&nbsp; if @showing_time &lt; 16<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; self.contents_opacity = @showing_time   * 16<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; if @showing_time == 0<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; self.visible = false<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;   self.contents.clear<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; return<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; end<br />
+&nbsp;&nbsp;&nbsp; end<br />
+&nbsp;   end<br />
+end<br />
+#==================================<br />
+#   &#129;&iexcl;   Scene_Map<br />
+#===================================<br />
+class   Scene_Map<br />
+&nbsp; def initialize_map_name_window(text = nil)<br />
+&nbsp;&nbsp;&nbsp; if   @map_name_window.nil?<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; @map_name_window = Window_Map_Name.new<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;   @map_name_window.opacity = 0<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; @map_name_window.text = text if not   text.nil?<br />
+&nbsp;&nbsp;&nbsp; end<br />
+&nbsp; end<br />
+&nbsp;   #--------------------------------------------------------------------------<br />
+&nbsp;   # &#129;&oelig; &fnof;&#129;&fnof;C&fnof;&ldquo;&#143;&circ;&mdash;&#157;<br />
+&nbsp;   #--------------------------------------------------------------------------<br />
+&nbsp;   alias xrxs20_main main<br />
+&nbsp; def main<br />
+&nbsp;&nbsp;&nbsp; initialize_map_name_window<br />
+&nbsp;&nbsp;&nbsp;   xrxs20_main<br />
+&nbsp;&nbsp;&nbsp; @map_name_window.dispose<br />
+&nbsp; end<br />
+&nbsp;   #--------------------------------------------------------------------------<br />
+&nbsp;   # &#129;&oelig; &fnof;t&fnof;&OElig;&#129;[&fnof;&euro;&#141;X&#144;V<br />
+&nbsp;   #--------------------------------------------------------------------------<br />
+&nbsp;   alias xrxs20_update update<br />
+&nbsp; def update<br />
+&nbsp;&nbsp;&nbsp;   @map_name_window.set_text($game_map.name)<br />
+&nbsp;&nbsp;&nbsp; @map_name_window.update<br />
+&nbsp;&nbsp;&nbsp;   xrxs20_update<br />
+&nbsp;   end<br />
+end<br />
+#===================================<br />
+#   &#129;&iexcl;   Scene_Title<br />
+#====================================<br />
+class   Scene_Title<br />
+&nbsp; alias xrxs20_main main<br />
+&nbsp; def main<br />
+&nbsp;&nbsp;&nbsp; $map_infos =   load_data(&quot;Data/MapInfos.rxdata&quot;)<br />
+&nbsp;&nbsp;&nbsp; for key in $map_infos.keys<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;   $map_infos[key] = $map_infos[key].name<br />
+&nbsp;&nbsp;&nbsp; end<br />
+&nbsp;&nbsp;&nbsp; xrxs20_main<br />
+&nbsp;   end<br />
+end<br />
+#=====================================<br />
+#   &#129;&iexcl;   Game_Map<br />
+#=====================================<br />
+class   Game_Map<br />
+&nbsp; def name<br />
+&nbsp;&nbsp;&nbsp; $map_infos[@map_id]<br />
+&nbsp;   end<br />
+end<br />
+#=====================================<br />
+#   &#129;&iexcl;   Scene_Battle<br />
+#==================================<br />
+class   Scene_Battle<br />
+&nbsp;   #--------------------------------------------------------------------------<br />
+&nbsp;   # &#129;&oelig; &fnof;&#129;&fnof;C&fnof;&ldquo;&#143;&circ;&mdash;&#157;<br />
+&nbsp;   #--------------------------------------------------------------------------<br />
+&nbsp;   alias xrxs20_main main<br />
+&nbsp; def main<br />
+&nbsp;&nbsp;&nbsp; xrxs20_main<br />
+&nbsp;&nbsp;&nbsp; if   $scene.is_a?(Scene_Map) and (not   XRXS20_Config::SCENE_BATTLE_TO_SCENE_MAP)<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;   $scene.initialize_map_name_window($game_map.name)<br />
+&nbsp;&nbsp;&nbsp; end<br />
+&nbsp;   end<br />
+end</span></p>
+

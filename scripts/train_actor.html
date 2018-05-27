@@ -1,0 +1,453 @@
+<link href="../style1.css" rel="stylesheet" type="text/css" />
+<p class="Contenu_Titre2">Personnages qui se suivent : </p>
+<p><span class="Contenu_Titre3">Fonction :</span><span class="Contenu_Texte">Les personnages se suivent en chenille.</span> </p>
+<p><span class="Contenu_Titre3">Installation : </span><span class="Contenu_Texte">ouvrez l'editeur de script (F11) et crreez un nouveau script au dessus de main (clique droit sur main puis nouveau script) et noimmez le 'Train_Actor' .</span> </p>
+<p class="Contenu_Titre3">Le Script: </p>
+<p>
+  <!--mstheme-->
+  <span class="Contenu_Texte">#<br />
+#   Train_Actor<br />
+#<br />
+# <a href="mailto:fukuyama@alles.or.jp">fukuyama@alles.or.jp</a><br />
+#   http://www4.big.or.jp/~fukuyama/<br />
+#<br />
+<br />
+# &#9679;&#36879;&#26126;&#29366;&#24907;&#29992;&#12473;&#12452;&#12483;&#12481;&#35373;&#23450;<br />
+# true &#12384;&#12392;&#12473;&#12452;&#12483;&#12481;&#21046;&#24481;&#12434;&#34892;&#12358;<br />
+# TRAIN_ACTOR_TRANSPARENT_SWITCH =   false<br />
+TRAIN_ACTOR_TRANSPARENT_SWITCH = true<br />
+<br />
+# &#9679;&#36879;&#26126;&#29366;&#24907;&#29992;&#12473;&#12452;&#12483;&#12481;&#30058;&#21495;<br />
+# &#12371;&#12398;&#30058;&#21495;&#12398;&#12473;&#12452;&#12483;&#12481;&#12364;ON&#12384;&#12392;&#36879;&#26126;&#12395;&#12394;&#12427;<br />
+TRAIN_ACTOR_TRANSPARENT_SWITCHES_INDEX = 20<br />
+<br />
+# &#23450;&#25968;<br />
+#Input::DOWN = 2<br />
+#Input::LEFT = 4<br />
+#Input::RIGHT =   6<br />
+#Input::UP = 8<br />
+DOWN_LEFT = 1<br />
+DOWN_RIGHT = 3<br />
+UP_LEFT =   7<br />
+UP_RIGHT = 9<br />
+JUMP = 5<br />
+<br />
+class Game_Party_Actor &lt;   Game_Character<br />
+def initialize<br />
+super()<br />
+@through = true<br />
+end<br />
+def   setup(actor)<br />
+# &#12461;&#12515;&#12521;&#12463;&#12479;&#12540;&#12398;&#12501;&#12449;&#12452;&#12523;&#21517;&#12392;&#33394;&#30456;&#12434;&#35373;&#23450;<br />
+if actor != nil<br />
+@character_name   = actor.character_name<br />
+@character_hue =   actor.character_hue<br />
+else<br />
+@character_name = &quot;&quot;<br />
+@character_hue =   0<br />
+end<br />
+# &#19981;&#36879;&#26126;&#24230;&#12392;&#21512;&#25104;&#26041;&#27861;&#12434;&#21021;&#26399;&#21270;<br />
+@opacity = 255<br />
+@blend_type =   0<br />
+end<br />
+def screen_z(height = 0)<br />
+if $game_player.x == @x and   $game_player.y == @y<br />
+return $game_player.screen_z(height) -   1<br />
+end<br />
+super(height)<br />
+end<br />
+#--------------------------------------------------------------------------<br />
+#   &#9679; &#19979;&#12395;&#31227;&#21205;<br />
+# turn_enabled : &#12381;&#12398;&#22580;&#12391;&#12398;&#21521;&#12365;&#22793;&#26356;&#12434;&#35377;&#21487;&#12377;&#12427;&#12501;&#12521;&#12464;<br />
+#--------------------------------------------------------------------------<br />
+def   move_down(turn_enabled = true)<br />
+# &#19979;&#12434;&#21521;&#12367;<br />
+if turn_enabled<br />
+turn_down<br />
+end<br />
+# &#36890;&#34892;&#21487;&#33021;&#12394;&#22580;&#21512;<br />
+if passable?(@x, @y, Input::DOWN)<br />
+# &#19979;&#12434;&#21521;&#12367;<br />
+turn_down<br />
+# &#24231;&#27161;&#12434;&#26356;&#26032;<br />
+@y +=   1<br />
+end<br />
+end<br />
+#--------------------------------------------------------------------------<br />
+#   &#9679; &#24038;&#12395;&#31227;&#21205;<br />
+# turn_enabled : &#12381;&#12398;&#22580;&#12391;&#12398;&#21521;&#12365;&#22793;&#26356;&#12434;&#35377;&#21487;&#12377;&#12427;&#12501;&#12521;&#12464;<br />
+#--------------------------------------------------------------------------<br />
+def   move_left(turn_enabled = true)<br />
+# &#24038;&#12434;&#21521;&#12367;<br />
+if turn_enabled<br />
+turn_left<br />
+end<br />
+# &#36890;&#34892;&#21487;&#33021;&#12394;&#22580;&#21512;<br />
+if passable?(@x, @y, Input::LEFT)<br />
+# &#24038;&#12434;&#21521;&#12367;<br />
+turn_left<br />
+# &#24231;&#27161;&#12434;&#26356;&#26032;<br />
+@x -=   1<br />
+end<br />
+end<br />
+#--------------------------------------------------------------------------<br />
+#   &#9679; &#21491;&#12395;&#31227;&#21205;<br />
+# turn_enabled : &#12381;&#12398;&#22580;&#12391;&#12398;&#21521;&#12365;&#22793;&#26356;&#12434;&#35377;&#21487;&#12377;&#12427;&#12501;&#12521;&#12464;<br />
+#--------------------------------------------------------------------------<br />
+def   move_right(turn_enabled = true)<br />
+# &#21491;&#12434;&#21521;&#12367;<br />
+if turn_enabled<br />
+turn_right<br />
+end<br />
+# &#36890;&#34892;&#21487;&#33021;&#12394;&#22580;&#21512;<br />
+if passable?(@x, @y, Input::RIGHT)<br />
+# &#21491;&#12434;&#21521;&#12367;<br />
+turn_right<br />
+# &#24231;&#27161;&#12434;&#26356;&#26032;<br />
+@x +=   1<br />
+end<br />
+end<br />
+#--------------------------------------------------------------------------<br />
+#   &#9679; &#19978;&#12395;&#31227;&#21205;<br />
+# turn_enabled : &#12381;&#12398;&#22580;&#12391;&#12398;&#21521;&#12365;&#22793;&#26356;&#12434;&#35377;&#21487;&#12377;&#12427;&#12501;&#12521;&#12464;<br />
+#--------------------------------------------------------------------------<br />
+def   move_up(turn_enabled = true)<br />
+# &#19978;&#12434;&#21521;&#12367;<br />
+if turn_enabled<br />
+turn_up<br />
+end<br />
+# &#36890;&#34892;&#21487;&#33021;&#12394;&#22580;&#21512;<br />
+if passable?(@x, @y, Input::UP)<br />
+# &#19978;&#12434;&#21521;&#12367;<br />
+turn_up<br />
+# &#24231;&#27161;&#12434;&#26356;&#26032;<br />
+@y -=   1<br />
+end<br />
+end<br />
+#--------------------------------------------------------------------------<br />
+#   &#9679; &#24038;&#19979;&#12395;&#31227;&#21205;<br />
+#--------------------------------------------------------------------------<br />
+def   move_lower_left<br />
+# &#21521;&#12365;&#22266;&#23450;&#12391;&#12394;&#12356;&#22580;&#21512;<br />
+unless @direction_fix<br />
+#   &#21491;&#21521;&#12365;&#12384;&#12387;&#12383;&#22580;&#21512;&#12399;&#24038;&#12434;&#12289;&#19978;&#21521;&#12365;&#12384;&#12387;&#12383;&#22580;&#21512;&#12399;&#19979;&#12434;&#21521;&#12367;<br />
+@direction = (@direction ==   Input::RIGHT ? Input::LEFT   : @direction == Input::UP ? Input::DOWN : @direction)<br />
+end<br />
+# &#19979;&rarr;&#24038;&#12289;&#24038;&rarr;&#19979;   &#12398;&#12393;&#12385;&#12425;&#12363;&#12398;&#12467;&#12540;&#12473;&#12364;&#36890;&#34892;&#21487;&#33021;&#12394;&#22580;&#21512;<br />
+  <span lang="EN-GB" xml:lang="EN-GB">if   (passable?(@x, @y, Input::DOWN) and passable?(@x, @y + 1, Input::LEFT))   or<br />
+(passable?(@x, @y, Input::LEFT) and passable?(@x - 1, @y,   Input::DOWN))<br />
+# </span>&#24231;&#27161;&#12434;&#26356;&#26032;<br />
+@x   -= 1<br />
+@y +=   1<br />
+end<br />
+end<br />
+#--------------------------------------------------------------------------<br />
+#   &#9679; &#21491;&#19979;&#12395;&#31227;&#21205;<br />
+#--------------------------------------------------------------------------<br />
+def   move_lower_right<br />
+# &#21521;&#12365;&#22266;&#23450;&#12391;&#12394;&#12356;&#22580;&#21512;<br />
+unless @direction_fix<br />
+# &#24038;&#21521;&#12365;&#12384;&#12387;&#12383;&#22580;&#21512;&#12399;&#21491;&#12434;&#12289;&#19978;&#21521;&#12365;&#12384;&#12387;&#12383;&#22580;&#21512;&#12399;&#19979;&#12434;&#21521;&#12367;<br />
+@direction = (@direction == Input::LEFT ? Input::RIGHT :   @direction == Input::UP ? Input::DOWN : @direction)<br />
+end<br />
+# &#19979;&rarr;&#21491;&#12289;&#21491;&rarr;&#19979;   &#12398;&#12393;&#12385;&#12425;&#12363;&#12398;&#12467;&#12540;&#12473;&#12364;&#36890;&#34892;&#21487;&#33021;&#12394;&#22580;&#21512;<br />
+<span lang="EN-GB" xml:lang="EN-GB">if   (passable?(@x, @y, Input::DOWN) and passable?(@x, @y + 1, Input::RIGHT))   or<br />
+(passable?(@x, @y, Input::RIGHT) and passable?(@x + 1, @y,   Input::DOWN))<br />
+# </span>&#24231;&#27161;&#12434;&#26356;&#26032;<br />
+@x   += 1<br />
+@y +=   1<br />
+end<br />
+end<br />
+#--------------------------------------------------------------------------<br />
+#   &#9679; &#24038;&#19978;&#12395;&#31227;&#21205;<br />
+#--------------------------------------------------------------------------<br />
+def   move_upper_left<br />
+# &#21521;&#12365;&#22266;&#23450;&#12391;&#12394;&#12356;&#22580;&#21512;<br />
+unless @direction_fix<br />
+# &#21491;&#21521;&#12365;&#12384;&#12387;&#12383;&#22580;&#21512;&#12399;&#24038;&#12434;&#12289;&#19979;&#21521;&#12365;&#12384;&#12387;&#12383;&#22580;&#21512;&#12399;&#19978;&#12434;&#21521;&#12367;<br />
+@direction = (@direction == Input::RIGHT ? Input::LEFT :   @direction == Input::DOWN ? Input::UP : @direction)<br />
+end<br />
+# &#19978;&rarr;&#24038;&#12289;&#24038;&rarr;&#19978;   &#12398;&#12393;&#12385;&#12425;&#12363;&#12398;&#12467;&#12540;&#12473;&#12364;&#36890;&#34892;&#21487;&#33021;&#12394;&#22580;&#21512;<br />
+<span lang="EN-GB" xml:lang="EN-GB">if   (passable?(@x, @y, Input::UP) and passable?(@x, @y - 1, Input::LEFT))   or<br />
+(passable?(@x, @y, Input::LEFT) and passable?(@x - 1, @y, Input::UP))<br />
+# </span>&#24231;&#27161;&#12434;&#26356;&#26032;<br />
+@x   -= 1<br />
+@y -=   1<br />
+end<br />
+end<br />
+#--------------------------------------------------------------------------<br />
+#   &#9679; &#21491;&#19978;&#12395;&#31227;&#21205;<br />
+#--------------------------------------------------------------------------<br />
+def   move_upper_right<br />
+# &#21521;&#12365;&#22266;&#23450;&#12391;&#12394;&#12356;&#22580;&#21512;<br />
+unless @direction_fix<br />
+# &#24038;&#21521;&#12365;&#12384;&#12387;&#12383;&#22580;&#21512;&#12399;&#21491;&#12434;&#12289;&#19979;&#21521;&#12365;&#12384;&#12387;&#12383;&#22580;&#21512;&#12399;&#19978;&#12434;&#21521;&#12367;<br />
+@direction = (@direction == Input::LEFT ? Input::RIGHT :   @direction == Input::DOWN ? Input::UP : @direction)<br />
+end<br />
+# &#19978;&rarr;&#21491;&#12289;&#21491;&rarr;&#19978;   &#12398;&#12393;&#12385;&#12425;&#12363;&#12398;&#12467;&#12540;&#12473;&#12364;&#36890;&#34892;&#21487;&#33021;&#12394;&#22580;&#21512;<br />
+<span lang="EN-GB" xml:lang="EN-GB">if   (passable?(@x, @y, Input::UP) and passable?(@x, @y - 1, Input::RIGHT))   or<br />
+(passable?(@x, @y, Input::RIGHT) and passable?(@x + 1, @y,   Input::UP))<br />
+# </span>&#24231;&#27161;&#12434;&#26356;&#26032;<br />
+@x   += 1<br />
+@y -= 1<br />
+end<br />
+end<br />
+<br />
+def   set_move_speed(move_speed)<br />
+@move_speed =   move_speed<br />
+end<br />
+end<br />
+<br />
+class Spriteset_Map<br />
+def   setup_actor_character_sprites?<br />
+return @setup_actor_character_sprites_flag !=   nil<br />
+end<br />
+def setup_actor_character_sprites(characters)<br />
+if   !setup_actor_character_sprites?<br />
+index_game_player =   0<br />
+@character_sprites.each_index do |i|<br />
+if   @character_sprites[i].character.instance_of?(Game_Player)<br />
+index_game_player =   i<br />
+break<br />
+end<br />
+end<br />
+for character in   characters.reverse<br />
+@character_sprites.unshift(<br />
+Sprite_Character.new(@viewport1,   character)<br />
+)<br />
+end<br />
+@setup_actor_character_sprites_flag =   true<br />
+end<br />
+end<br />
+end<br />
+<br />
+class Scene_Map<br />
+def   setup_actor_character_sprites(characters)<br />
+@spriteset.setup_actor_character_sprites(characters)<br />
+end<br />
+end<br />
+<br />
+class   Game_Party<br />
+def set_transparent_actors(transparent)<br />
+@transparent =   transparent<br />
+end<br />
+def setup_actor_character_sprites<br />
+if @characters ==   nil<br />
+@characters = []<br />
+for i in 1 ..   4<br />
+@characters.push(Game_Party_Actor.new)<br />
+end<br />
+end<br />
+if @actors_chach ==   nil<br />
+@actors_chach = []<br />
+end<br />
+if @actors_chach != @actors<br />
+@actors_chach   = @actors.clone<br />
+for i in 1 .. 4<br />
+@characters[i -   1].setup(actors[i])<br />
+end<br />
+end<br />
+if   $scene.instance_of?(Scene_Map)<br />
+$scene.setup_actor_character_sprites(@characters)<br />
+end<br />
+end<br />
+def   update_party_actors<br />
+setup_actor_character_sprites<br />
+transparent =   $game_player.transparent<br />
+if transparent == false<br />
+if   TRAIN_ACTOR_TRANSPARENT_SWITCH<br />
+transparent =   $game_switches[TRAIN_ACTOR_TRANSPARENT_SWITCHES_INDEX]<br />
+else<br />
+transparent =   $game_player.transparent<br />
+end<br />
+end<br />
+for character in   @characters<br />
+character.transparent =   transparent<br />
+character.set_move_speed($game_player.get_move_speed)<br />
+character.update<br />
+end<br />
+end<br />
+def   moveto_party_actors( x, y )<br />
+setup_actor_character_sprites<br />
+for character in   @characters<br />
+character.moveto( x, y )<br />
+end<br />
+if @move_list ==   nil<br />
+@move_list = []<br />
+end<br />
+for i in 0 .. 10<br />
+@move_list[i] =   nil<br />
+end<br />
+end<br />
+def move_party_actors<br />
+if @move_list == nil<br />
+@move_list   = []<br />
+for i in 0 .. 10<br />
+@move_list[i] =   nil<br />
+end<br />
+end<br />
+@move_list.each_index do |i|<br />
+if @characters[i] !=   nil<br />
+case @move_list[i].type<br />
+when   Input::DOWN<br />
+@characters[i].move_down(@move_list[i].args[0])<br />
+when   Input::LEFT<br />
+@characters[i].move_left(@move_list[i].args[0])<br />
+when   Input::RIGHT<br />
+@characters[i].move_right(@move_list[i].args[0])<br />
+when   Input::UP<br />
+@characters[i].move_up(@move_list[i].args[0])<br />
+when   DOWN_LEFT<br />
+@characters[i].move_lower_left<br />
+when   DOWN_RIGHT<br />
+@characters[i].move_lower_right<br />
+when   UP_LEFT<br />
+@characters[i].move_upper_left<br />
+when   UP_RIGHT<br />
+@characters[i].move_upper_right<br />
+when   JUMP<br />
+@characters[i].jump(@move_list[i].args[0],@move_list[i].args[1])<br />
+end<br />
+end<br />
+end<br />
+end<br />
+class   Move_List_Element<br />
+def initialize(type,args)<br />
+@type = type<br />
+@args =   args<br />
+end<br />
+def type() return @type end<br />
+def args() return @args   end<br />
+end<br />
+def   add_move_list(type,*args)<br />
+@move_list.unshift(Move_List_Element.new(type,args)).pop<br />
+end<br />
+def   move_down_party_actors(turn_enabled =   true)<br />
+move_party_actors<br />
+add_move_list(Input::DOWN,turn_enabled)<br />
+end<br />
+def   move_left_party_actors(turn_enabled =   true)<br />
+move_party_actors<br />
+add_move_list(Input::LEFT,turn_enabled)<br />
+end<br />
+def   move_right_party_actors(turn_enabled =   true)<br />
+move_party_actors<br />
+add_move_list(Input::RIGHT,turn_enabled)<br />
+end<br />
+def   move_up_party_actors(turn_enabled =   true)<br />
+move_party_actors<br />
+add_move_list(Input::UP,turn_enabled)<br />
+end<br />
+def   move_lower_left_party_actors<br />
+move_party_actors<br />
+add_move_list(DOWN_LEFT)<br />
+end<br />
+def   move_lower_right_party_actors<br />
+move_party_actors<br />
+add_move_list(DOWN_RIGHT)<br />
+end<br />
+def   move_upper_left_party_actors<br />
+move_party_actors<br />
+add_move_list(UP_LEFT)<br />
+end<br />
+def   move_upper_right_party_actors<br />
+move_party_actors<br />
+add_move_list(UP_RIGHT)<br />
+end<br />
+def   jump_party_actors(x_plus,   y_plus)<br />
+move_party_actors<br />
+add_move_list(JUMP,x_plus,   y_plus)<br />
+end<br />
+end<br />
+<br />
+module Game_Player_Module<br />
+def   update<br />
+$game_party.update_party_actors<br />
+super<br />
+end<br />
+def moveto( x, y   )<br />
+super<br />
+$game_party.moveto_party_actors( x, y )<br />
+end<br />
+def   move_down(turn_enabled = true)<br />
+if passable?(@x, @y,   Input::DOWN)<br />
+$game_party.move_down_party_actors(turn_enabled)<br />
+end<br />
+super(turn_enabled)<br />
+end<br />
+def   move_left(turn_enabled = true)<br />
+if passable?(@x, @y,   Input::LEFT)<br />
+$game_party.move_left_party_actors(turn_enabled)<br />
+end<br />
+super(turn_enabled)<br />
+end<br />
+def   move_right(turn_enabled = true)<br />
+if passable?(@x, @y,   Input::RIGHT)<br />
+$game_party.move_right_party_actors(turn_enabled)<br />
+end<br />
+super(turn_enabled)<br />
+end<br />
+def   move_up(turn_enabled = true)<br />
+if passable?(@x, @y,   Input::UP)<br />
+$game_party.move_up_party_actors(turn_enabled)<br />
+end<br />
+super(turn_enabled)<br />
+end<br />
+def   move_lower_left<br />
+# &#19979;&rarr;&#24038;&#12289;&#24038;&rarr;&#19979;   &#12398;&#12393;&#12385;&#12425;&#12363;&#12398;&#12467;&#12540;&#12473;&#12364;&#36890;&#34892;&#21487;&#33021;&#12394;&#22580;&#21512;<br />
+<span lang="EN-GB" xml:lang="EN-GB">if   (passable?(@x, @y, Input::DOWN) and passable?(@x, @y + 1, Input::LEFT))   or<br />
+(passable?(@x, @y, Input::LEFT) and passable?(@x - 1, @y,   Input::DOWN))<br />
+$game_party.move_lower_left_party_actors<br />
+end<br />
+super<br />
+end<br />
+def   move_lower_right<br />
+# </span>&#19979;&rarr;&#21491;&#12289;&#21491;&rarr;&#19979;   &#12398;&#12393;&#12385;&#12425;&#12363;&#12398;&#12467;&#12540;&#12473;&#12364;&#36890;&#34892;&#21487;&#33021;&#12394;&#22580;&#21512;<br />
+<span lang="EN-GB" xml:lang="EN-GB">if   (passable?(@x, @y, Input::DOWN) and passable?(@x, @y + 1, Input::RIGHT))   or<br />
+(passable?(@x, @y, Input::RIGHT) and passable?(@x + 1, @y,   Input::DOWN))<br />
+$game_party.move_lower_right_party_actors<br />
+end<br />
+super<br />
+end<br />
+def   move_upper_left<br />
+# </span>&#19978;&rarr;&#24038;&#12289;&#24038;&rarr;&#19978;   &#12398;&#12393;&#12385;&#12425;&#12363;&#12398;&#12467;&#12540;&#12473;&#12364;&#36890;&#34892;&#21487;&#33021;&#12394;&#22580;&#21512;<br />
+<span lang="EN-GB" xml:lang="EN-GB">if   (passable?(@x, @y, Input::UP) and passable?(@x, @y - 1, Input::LEFT))   or<br />
+(passable?(@x, @y, Input::LEFT) and passable?(@x - 1, @y,   Input::UP))<br />
+$game_party.move_upper_left_party_actors<br />
+end<br />
+super<br />
+end<br />
+def   move_upper_right<br />
+# </span>&#19978;&rarr;&#21491;&#12289;&#21491;&rarr;&#19978;   &#12398;&#12393;&#12385;&#12425;&#12363;&#12398;&#12467;&#12540;&#12473;&#12364;&#36890;&#34892;&#21487;&#33021;&#12394;&#22580;&#21512;<br />
+<span lang="EN-GB" xml:lang="EN-GB">if   (passable?(@x, @y, Input::UP) and passable?(@x, @y - 1, Input::RIGHT))   or<br />
+(passable?(@x, @y, Input::RIGHT) and passable?(@x + 1, @y,   Input::UP))<br />
+$game_party.move_upper_right_party_actors<br />
+end<br />
+super<br />
+end<br />
+def   jump(x_plus, y_plus)<br />
+# </span>&#26032;&#12375;&#12356;&#24231;&#27161;&#12434;&#35336;&#31639;<br />
+new_x = @x + x_plus<br />
+new_y = @y + y_plus<br />
+# &#21152;&#31639;&#20516;&#12364; (0,0) &#12398;&#22580;&#21512;&#12363;&#12289;&#12472;&#12515;&#12531;&#12503;&#20808;&#12364;&#36890;&#34892;&#21487;&#33021;&#12394;&#22580;&#21512;<br />
+if   (x_plus == 0 and y_plus == 0) or passable?(new_x, new_y,   0)<br />
+$game_party.jump_party_actors(x_plus, y_plus)<br />
+end<br />
+super(x_plus,   y_plus)<br />
+end<br />
+<br />
+# -----------------------------------------------<br />
+#   move_speed &#12434;&#22806;&#12363;&#12425;&#35211;&#12428;&#12427;&#12424;&#12358;&#12395;<br />
+#   -----------------------------------------------<br />
+def get_move_speed<br />
+return   @move_speed<br />
+end<br />
+end<br />
+<br />
+class Game_Player<br />
+include   Game_Player_Module<br />
+end</span> </p>
+<p class="Contenu_Titre3 Style15">&nbsp;</p>
+</body>
+
+</html>

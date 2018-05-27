@@ -1,0 +1,280 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+<title>Document sans nom</title>
+<link href="../style1.css" rel="stylesheet" type="text/css" />
+<style type="text/css">
+<!--
+body {
+	background-color: #CCCCCC;
+}
+-->
+</style></head>
+
+<body>
+<p class="Contenu_Titre2">Interface de combat complette :</p>
+<p><span class="Contenu_Titre3">Fonction :</span> <span class="Contenu_Texte">permet d'avoir un &eacute;cran de comabt plus beau et plus complette</span>.  </p>
+<p><span class="Contenu_Titre3">Insatllation :</span> <span class="Contenu_Texte">ouvrez l'editeur de script et cree&eacute;z le scripte au dessus de main.Nommez ce derni&eacute; Scene_Battle.</span></p>
+<p class="Contenu_Titre3">Le Script :</p>
+<p class="Contenu_Texte">class   Scene_Battle<br />
+  def main<br />
+  $game_temp.in_battle =   true<br />
+  $game_temp.battle_turn = 0<br />
+  $game_temp.battle_event_flags.clear<br />
+  $game_temp.battle_abort = false<br />
+  $game_temp.battle_main_phase = false<br />
+  $game_temp.battleback_name =   $game_map.battleback_name<br />
+  $game_temp.forcing_battler = nil<br />
+  $game_system.battle_interpreter.setup(nil, 0)<br />
+  @troop_id = $game_temp.battle_troop_id<br />
+  $game_troop.setup(@troop_id)<br />
+  s1 =   $data_system.words.attack<br />
+  s2 =   $data_system.words.skill<br />
+  s3 =   $data_system.words.guard<br />
+  s4 =   $data_system.words.item<br />
+  @actor_command_window =   Window_Command.new(160, [s1, s2, s3, s4])<br />
+  @actor_command_window.y = 160<br />
+  @actor_command_window.back_opacity = 160<br />
+  @actor_command_window.active = false<br />
+  @actor_command_window.visible = false<br />
+  @party_command_window = Window_PartyCommand.new<br />
+  @help_window = Window_Help.new<br />
+  @help_window.back_opacity = 160<br />
+  @help_window.visible = false<br />
+  @status_window = Window_BattleStatus.new<br />
+  @message_window = Window_Message.new<br />
+  @spriteset = Spriteset_Battle.new<br />
+  @wait_count = 0<br />
+  if   $data_system.battle_transition == &quot;&quot;<br />
+  Graphics.transition(20)<br />
+  else<br />
+  Graphics.transition(40,   &quot;Graphics/Transitions/&quot; +<br />
+  $data_system.battle_transition)<br />
+  end<br />
+  start_phase1<br />
+  loop do<br />
+  Graphics.update<br />
+  Input.update<br />
+  update<br />
+  if $scene !=   self<br />
+  break<br />
+  end<br />
+  end<br />
+  $game_map.refresh<br />
+  Graphics.freeze<br />
+  @actor_command_window.dispose<br />
+  @party_command_window.dispose<br />
+  @help_window.dispose<br />
+  @status_window.dispose<br />
+  @message_window.dispose<br />
+  if   @skill_window != nil<br />
+  @skill_window.dispose<br />
+  end<br />
+  if @item_window !=   nil<br />
+  @item_window.dispose<br />
+  end<br />
+  if @result_window !=   nil<br />
+  @result_window.dispose<br />
+  end<br />
+  @spriteset.dispose<br />
+  ### D&eacute;but de   l'ajout par Krazplay pour sa nouvelle fen&ecirc;tre d'exp ###<br />
+  if @levelup != nil #Correction du bug de fuite<br />
+  @fond = Window_Base.new(0,0,640,480)<br />
+  coordx = [5,320, 5,320]<br />
+  coordy =   [12, 12, 248, 248]<br />
+  @window = []<br />
+  for i in 0...$game_party.actors.size<br />
+  actor = $game_party.actors[i]<br />
+  @window[i] = Window_Result.new(coordx[i],   coordy[i])<br />
+  @window[i].refresh(actor,0)<br />
+  if   @levelup[i] != nil #correction d'un bug, n'oubliez pas le end plus   bas<br />
+  if @levelup[i] &gt; 0<br />
+  @window[i].refresh(actor, @levelup[i])<br />
+  @window[i].showlvlup(actor)<br />
+  end<br />
+  end #voila le end qui va avec   la correction<br />
+  end<br />
+  if $data_system.battle_transition == &quot;&quot;<br />
+  Graphics.transition(20)<br />
+  else<br />
+  Graphics.transition(20,   &quot;Graphics/Transitions/&quot; + $data_system.battle_transition)<br />
+  end<br />
+  loop do<br />
+  Graphics.update<br />
+  Input.update<br />
+  if   Input.trigger?(Input::C)<br />
+  break<br />
+  end<br />
+  end<br />
+  for i in 0...$game_party.actors.size<br />
+  @window[i].dispose<br />
+  end<br />
+  @fond.dispose<br />
+  end # end de la correction du bug de fuite<br />
+  ### Fin de l'ajout par Krazplay pour sa nouvelle fen&ecirc;tre d'exp   ###<br />
+  if $scene.is_a?(Scene_Title)<br />
+  Graphics.transition<br />
+  Graphics.freeze<br />
+  end<br />
+  if $BTEST and not   $scene.is_a?(Scene_Gameover)<br />
+  $scene =   nil<br />
+  end<br />
+  end<br />
+  <br />
+  def   start_phase5<br />
+  @phase = 5<br />
+  $game_system.me_play($game_system.battle_end_me)<br />
+  $game_system.bgm_play($game_temp.map_bgm)<br />
+  exp = 0<br />
+  gold = 0<br />
+  treasures = []<br />
+  for enemy in   $game_troop.enemies<br />
+  unless   enemy.hidden<br />
+  exp += enemy.exp<br />
+  gold += enemy.gold<br />
+  if rand(100)   &lt; enemy.treasure_prob<br />
+  if enemy.item_id &gt;   0<br />
+  treasures.push($data_items[enemy.item_id])<br />
+  end<br />
+  if enemy.weapon_id &gt;   0<br />
+  treasures.push($data_weapons[enemy.weapon_id])<br />
+  end<br />
+  if enemy.armor_id &gt;   0<br />
+  treasures.push($data_armors[enemy.armor_id])<br />
+  end<br />
+  end<br />
+  end<br />
+  end<br />
+  treasures = treasures[0..5]<br />
+  @levelup = [] # Cette ligne-l&agrave; est &agrave; ajouter si vous ne voullez   pas copier<br />
+  # tout le scr&icirc;pt<br />
+  for i in 0...$game_party.actors.size<br />
+  actor = $game_party.actors[i]<br />
+  if   actor.cant_get_exp? == false<br />
+  last_level =   actor.level<br />
+  actor.exp += exp<br />
+  @levelup[i] = actor.level - last_level # Cette ligne-l&agrave; aussi   #<br />
+  if actor.level &gt; last_level<br />
+  @status_window.level_up(i)<br />
+  end<br />
+  end<br />
+  end<br />
+  $game_party.gain_gold(gold)<br />
+  for   item in treasures<br />
+  case item<br />
+  when RPG::Item<br />
+  $game_party.gain_item(item.id, 1)<br />
+  when RPG::Weapon<br />
+  $game_party.gain_weapon(item.id, 1)<br />
+  when RPG::Armor<br />
+  $game_party.gain_armor(item.id, 1)<br />
+  end<br />
+  end<br />
+  @result_window = Window_BattleResult.new(exp, gold,   treasures)<br />
+  @phase5_wait_count =   100<br />
+  end<br />
+end </p>
+<p class="Contenu_Texte">#========================<br />
+  # Cr&eacute;er   un nouveau scr&icirc;pt au-dessus de main et copier celui-l&agrave; dedans.<br />
+  # Tout ce qui est sous la d&eacute;finition refresh est ce qui apparait   tout le temps<br />
+  # Tout ce qui est sous la   d&eacute;finition showlvlup est ce qui n'apparait qu'en<br />
+  # cas de level up<br />
+  #========================<br />
+  <br />
+  class Window_Result &lt; Window_Base<br />
+  def initialize(x,y)<br />
+  super(x, y,   315, 220)<br />
+  self.contents = Bitmap.new(width - 32,   height - 32)<br />
+  self.contents.font.name =   $fontface<br />
+  self.contents.font.size =   $fontsize<br />
+  self.back_opacity = 255<br />
+  end<br />
+  <br />
+  def   refresh(actor,levelenmoins)<br />
+  self.contents.clear<br />
+  self.contents.font.color = Color.new(255, 50, 50,   255)<br />
+  self.contents.font.size = 24<br />
+  draw_actor_battler(actor,50,90,30)<br />
+  draw_actor_battler(actor,110,90,60)<br />
+  draw_actor_battler(actor,170,90,90)<br />
+  if levelenmoins == 0<br />
+  draw_actor_battler(actor,230,90,250)<br />
+  end<br />
+  largeur_nom =   contents.text_size(actor.name).width<br />
+  self.contents.draw_text(width/2 - largeur_nom/2 -16, 0, 99, 24,   actor.name)<br />
+  self.contents.font.color =   Color.new(100, 255, 100, 255)<br />
+  self.contents.font.size = 19<br />
+  self.contents.draw_text(0,25, 99, 24, &quot;Niv&quot;)<br />
+  self.contents.font.color = normal_color<br />
+  self.contents.draw_text(10, 45, 99, 24, &quot;HP&quot;)<br />
+  self.contents.draw_text(10, 63, 99, 24, &quot;MP&quot;)<br />
+  self.contents.font.size = 18<br />
+  self.contents.draw_text(0, 83, 99, 24, &quot;Force&quot;)<br />
+  self.contents.draw_text(0, 103, 99, 24,   &quot;Dexterit&eacute;&quot;)<br />
+  self.contents.draw_text(0, 123, 99,   24, &quot;Agilit&eacute;&quot;)<br />
+  self.contents.draw_text(0, 143,   99, 24, &quot;Intelligence&quot;)<br />
+  self.c<span lang="EN-GB" xml:lang="EN-GB">ontents.font.color = Color.new(125, 255, 125,   255)<br />
+  self.contents.draw_text(60, 170, 99, 24,   &quot;Suivant&quot;)<br />
+    @levelenmoins =   levelenmoins<br />
+    @lvl =   actor.level-levelenmoins<br />
+    self.contents.font.color   = normal_color<br />
+    self.contents.draw_text(80, 25,   30, 24, @lvl.to_s,2)<br />
+    self.contents.draw_text(60,   45, 50, 24, $data_actors[actor.id].parameters[0, @lvl].to_s,2)<br />
+    self.contents.draw_text(60, 63, 50, 24,   $data_actors[actor.id].parameters[1, @lvl].to_s,2)<br />
+    self.contents.draw_text(80, 83, 30, 24,   $data_actors[actor.id].parameters[2, @lvl].to_s,2)<br />
+    self.contents.draw_text(80, 103, 30, 24,   $data_actors[actor.id].parameters[3, @lvl].to_s,2)<br />
+    self.contents.draw_text(80, 123, 30, 24,   $data_actors[actor.id].parameters[4, @lvl].to_s,2)<br />
+    self.contents.draw_text(80, 143, 30, 24,   $data_actors[actor.id].parameters[5, @lvl].to_s,2)<br />
+    self.contents.draw_text(140, 170, 70, 24,   actor.next_rest_exp_s.to_s,1)<br />
+    end<br />
+  <br />
+    def   showlvlup(actor)<br />
+    hpgagne =   $data_actors[actor.id].parameters[0, actor.level] -   $data_actors[actor.id].parameters[0, @lvl]<br />
+    mpgagne = $data_actors[actor.id].parameters[1, actor.level] -   $data_actors[actor.id].parameters[1, @lvl]<br />
+    forcegagne = $data_actors[actor.id].parameters[2, actor.level] -   $data_actors[actor.id].parameters[2, @lvl]<br />
+    dexgagne = $data_actors[actor.id].parameters[3, actor.level] -   $data_actors[actor.id].parameters[3, @lvl]<br />
+    agigagne = $data_actors[actor.id].parameters[4, actor.level] -   $data_actors[actor.id].parameters[4, @lvl]<br />
+    intgagne = $data_actors[actor.id].parameters[5, actor.level] -   $data_actors[actor.id].parameters[5, @lvl]<br />
+    self.contents.font.color = Color.new(100, 255, 100,   255)<br />
+    self.contents.font.size = 19<br />
+    self.contents.draw_text(50, 25, 99, 24, &quot;UP !&quot;)<br />
+    self.contents.font.color = Color.new(20, 255, 20,   255)<br />
+    self.contents.font.size = 18<br />
+    self.contents.draw_text(210, 25, 99, 24,   actor.level.to_s)<br />
+    self.contents.draw_text(190,   45, 40, 24, $data_actors[actor.id].parameters[0,   actor.level].to_s,2)<br />
+    self.contents.draw_text(190,   63, 40, 24, $data_actors[actor.id].parameters[1,   actor.level].to_s,2)<br />
+    self.contents.draw_text(200,   83, 30, 24, $data_actors[actor.id].parameters[2,   actor.level].to_s,2)<br />
+    self.contents.draw_text(200,   103, 30, 24, $data_actors[actor.id].parameters[3,   actor.level].to_s,2)<br />
+    self.contents.draw_text(200,   123, 30, 24, $data_actors[actor.id].parameters[4,   actor.level].to_s,2)<br />
+    self.contents.draw_text(200,   143, 30, 24, $data_actors[actor.id].parameters[5,   actor.level].to_s,2)<br />
+    self.contents.font.color =   Color.new(100, 255, 255, 255)<br />
+    self.contents.draw_text(140, 25, 20, 24,   @levelenmoins.to_s,2)<br />
+    self.contents.draw_text(130, 45, 40, 24,   hpgagne.to_s,2)<br />
+    self.contents.draw_text(130, 63,   40, 24, mpgagne.to_s,2)<br />
+    self.contents.draw_text(140, 83, 30, 24,   forcegagne.to_s,2)<br />
+    self.contents.draw_text(140,   103, 30, 24, dexgagne.to_s,2)<br />
+    self.contents.draw_text(140, 123, 30, 24,   agigagne.to_s,2)<br />
+    self.contents.draw_text(140,   143, 30, 24, intgagne.to_s,2)<br />
+    self.contents.font.color = Color.new(255, 100, 100,   255)<br />
+    h =   [25,45,63,83,103,123,143]<br />
+    for i in   0...7<br />
+    self.contents.draw_text(120, h[i], 20, 24,   &quot;+&quot;)<br />
+    end<br />
+    for i in   0...7<br />
+    self.contents.draw_text(180, h[i], 20, 24,   &quot;=&quot;)<br />
+    end<br />
+    end<br />
+  <br />
+    def   draw_actor_battler(actor, x, y, transparence=255)<br />
+    bitmap = RPG::Cache.battler(actor.battler_name,   actor.battler_hue)<br />
+    cw =   bitmap.width<br />
+    ch = bitmap.height<br />
+    src_rect = Rect.new(0, 0, cw, ch)<br />
+    self.contents.blt(x - cw / 2, y - ch / 2, bitmap, src_rect,   transparence)<br />
+    end<br />
+    end </span></p>
+<p class="Style14">&nbsp; </p>
+</body>
+
+</html>

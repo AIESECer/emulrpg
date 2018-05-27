@@ -1,0 +1,199 @@
+-- phpMyAdmin SQL Dump
+-- version 2.6.1
+-- http://www.phpmyadmin.net
+-- 
+-- Serveur: localhost
+-- Généré le : Mercredi 13 Décembre 2006 à 21:47
+-- Version du serveur: 4.1.9
+-- Version de PHP: 4.3.10
+-- 
+-- Base de données: `emulrpg1_db`
+-- 
+
+-- --------------------------------------------------------
+
+-- 
+-- Structure de la table `debut_xp`
+-- 
+
+CREATE TABLE `debut_xp` (
+  `id` int(25) NOT NULL auto_increment,
+  `titre` varchar(45) NOT NULL default '',
+  `des` text NOT NULL,
+  `partie` varchar(10) NOT NULL default '',
+  `lien` varchar(55) NOT NULL default '',
+  PRIMARY KEY  (`id`)
+) ENGINE=MyISAM DEFAULT CHARSET=latin1 AUTO_INCREMENT=12 ;
+
+-- 
+-- Contenu de la table `debut_xp`
+-- 
+
+INSERT INTO `debut_xp` VALUES (1, 'Installation et decouverte', 'Preparez vous a entrer dans le monde de RPG Maker XP.', '1', 'debut_xp/debut_xp_1.html');
+INSERT INTO `debut_xp` VALUES (2, 'La base de données', 'La base de donneés est un outils essentiel a RPG Maker XP vous deverez la connaitre dans les mojndre details', '1', 'debut_xp/debut_xp_database2.html');
+INSERT INTO `debut_xp` VALUES (3, 'Creer sa 1er carte (map)', 'Nous allons apprandre a faire nos premieres maps.', '1', 'debut_xp/debut_xp_map3.html');
+INSERT INTO `debut_xp` VALUES (4, 'Les evenements', 'nous allons des a present nous interersser au evenements a fin de rendre nos RPG plus vivants.', '1', '');
+INSERT INTO `debut_xp` VALUES (5, 'Relier deux cartes ou plus', 'vous savez faire des cartes et creer des evenements , utilisez ces derniers pour lier deux maps.', '1', '');
+INSERT INTO `debut_xp` VALUES (6, 'TP: Votre 1er RPG', 'On y est enfin vous allez faire votre 1er RPG soyez en fier.', '1', '');
+INSERT INTO `debut_xp` VALUES (7, 'Les variables et les interupteurs', 'Deux petits trucs tout betes qui vont vous aider a ameliorer vos jeux.', '2', '');
+INSERT INTO `debut_xp` VALUES (8, 'Ajouter des ressources a son projet', 'Les ressources fournies avec RPG maker XP sont bien jolies mais parfois elles s''averent insufisantes , vous apprendrez a en ajouter de nouvelles. ', '2', '');
+INSERT INTO `debut_xp` VALUES (9, 'Utilisation de scripts', 'Grace aux scripts vous pourrez depasser les limites que vous impose RPG Maker Xp ,et rendre vos RPG plus realistes et performants.', '2', '');
+INSERT INTO `debut_xp` VALUES (10, 'Finaliser son projet RPG Maker Xp', 'Apres avoir termine votre RPG sur RPG Maker Xp vous devez l''exporter pour en faire profiter les autres.Ce cours vous expliqueras comment faire marcher votre jeux chez une personne n''eyant pas RPG maker sur son ordi.', '2', '');
+INSERT INTO `debut_xp` VALUES (11, 'TP: faire un RPG complexe et l''exporter', 'Nous allons realiser ensemble un RPG complexe et l''exporter.', '2', '');
+
+-- --------------------------------------------------------
+
+-- 
+-- Structure de la table `lexique`
+-- 
+
+CREATE TABLE `lexique` (
+  `id` int(11) NOT NULL auto_increment,
+  `mot` varchar(30) NOT NULL default '',
+  `des` text NOT NULL,
+  PRIMARY KEY  (`id`)
+) ENGINE=MyISAM DEFAULT CHARSET=latin1 AUTO_INCREMENT=35 ;
+
+-- 
+-- Contenu de la table `lexique`
+-- 
+
+INSERT INTO `lexique` VALUES (1, 'Armes:', 'objets que le héros va utiliser  afin d''attaquer ou se défendre lors d''un combat ou permettant d''effectuer d''autres actions.');
+INSERT INTO `lexique` VALUES (2, 'Astuces et codes:', 'commandes qui permettent au joueur de progresser plus facilement dans le jeu et parfois plus rapidement.\r\n\r\n');
+INSERT INTO `lexique` VALUES (3, 'Attaque:', 'mouvement permettant au héros d''affaiblir son ennemi.');
+INSERT INTO `lexique` VALUES (4, 'Attaque échouée (ratée):', 'Quand une attaque est lancée sur un ennemi et qu''elle ne le touche pas on appelle ça une attaque échouée ou ratée.\r\n');
+INSERT INTO `lexique` VALUES (5, 'Boss:', 'ennemi puissant que le héros doit combattre et vaincre afin d''accomplir une mission qu''ont lui a confiée. Les boss gardent  ou retiennent souvent quelqu''un ou quelque chose que le héros doit obtenir ou récupérer. C''est souvent eux les grand méchants de l''histoire.\r\n');
+INSERT INTO `lexique` VALUES (6, 'Carte(map):', 'la carte est le monde ou se déroule l''aventure du jeu.\r\n');
+INSERT INTO `lexique` VALUES (7, 'Combat:', 'moment ou le héros doit affronter un ou plusieurs ennemis et généralement les vaincre pour progresser dans l''aventure. A la fin d''un combat le héros gagne de l''expérience qui lui fait monter son niveau.\r\n');
+INSERT INTO `lexique` VALUES (8, 'Coup critique:', 'attaque qui cause plus d''effet que l''attaque normale. Un coup critique peut se faire en fonction des statistiques du héros. Il se peut que dans certains jeu il possède un autre nom comme par exemple mode parfait.');
+INSERT INTO `lexique` VALUES (9, 'Durée de vie:', 'moyenne du nombres d''heures que le joueur va passer pour terminer le jeu.');
+INSERT INTO `lexique` VALUES (10, 'Ennemis:', 'ce sont les personnages que le héros doit combattre pour accomplir son aventure ou mission. Ils sont la tout simplement pour donner du fil a retordre au joueur et lui compliquer la tâche.');
+INSERT INTO `lexique` VALUES (11, 'Expérience:', 'points que le héros a acquis en fin de combat qui lui font augmenter son niveau et ses statistiques.');
+INSERT INTO `lexique` VALUES (12, 'Héros:', 'c''est le personnage que le joueur incarne pour avancer dans le jeu.');
+INSERT INTO `lexique` VALUES (13, 'Jeu de Rôle:', 'type de jeux vidéo dans lequel le joueur peut incarner plusieurs personnages simultanément ou d''incarner un personnage bien precis et faire que si vous etiez lui. Dans ce type de jeux le joueur doit atteindre une série de buts appelés quêtes et sous-quêtes afin de terminer le jeu. ');
+INSERT INTO `lexique` VALUES (14, 'Magasins:', 'endroits ou le héros peut aller acheter différents objets ou marchandises. Ces magasins peuvent être des pharmacies des armureries, magasins de magie, etc.. tout dépend du jeu. Ces magasins sont repartis un peu partout dans le jeu.\r\n');
+INSERT INTO `lexique` VALUES (15, 'Magie:', 'technique utilisée par le héros pour attaquer ou se défendre lors d''un combat ou d''effectuer d''autres actions. La magie peut ne pas faire partie d''un jeu de rôle, cela dépend du jeu.\r\n');
+INSERT INTO `lexique` VALUES (16, 'Map (carte):', 'map est la traduction anglophone de carte.\r\n');
+INSERT INTO `lexique` VALUES (17, 'MMORPG:', 'Initiales de Massive Multiplayer Online RPG.Type de RPG qui se jouent en réseau et dans ce genre de jeu le personnage choisit lui même son apparence.Le jeu se deroule dans une carte relativement grande.');
+INSERT INTO `lexique` VALUES (18, 'Niveau:', 'valeur qui monte quand le héros gagne de l''expérience. Le niveau est lié aux statistiques. Plus le niveau monte plus les statistiques s''élèvent. \r\n');
+INSERT INTO `lexique` VALUES (19, 'One hit K.O:', 'attaque ou capacité qui met hors combat celui qui la reçoit du 1er coup. Ces attaques ont cet effet quelque soit celui qui l''utilise ou celui qui la reçoit. Elle peut être inexistante ou avoir un autre nom comme coup fatale (fatal hit) dans certains jeux. Attention ce terme n''est pas le même que Coup critique.\r\n');
+INSERT INTO `lexique` VALUES (20, 'Options:', 'menu contenant des commandes supplémentaires pour le jeu. Ces commandes sont généralement la vitesse du texte a l''écran, type et couleurs des bordures, sortie du son (mono, stéréo, désactivé), et difficulté du jeu.. ces commandes peuvent varier d''un jeu a un autre. \r\n');
+INSERT INTO `lexique` VALUES (21, 'PNJ:', 'PNJ sont les initiales de Personnages Non joueurs. Se sont des personnages que le joueur ne peut pas contrôler ,et qui ne sont pas les principaux ennemis ou alliés. Ils sont la pour aider le joueur dans son aventure en lui donnant diverses informations et objets.\r\n');
+INSERT INTO `lexique` VALUES (22, 'Quête:', 'mission ou but que le héros doit atteindre dans le jeu.\r\n');
+INSERT INTO `lexique` VALUES (23, 'RPG:', 'RPG sont les initiales de Rôle Playing Game qui est la traduction anglophone de Jeu de Rôle.');
+INSERT INTO `lexique` VALUES (24, 'RPG action:', 'type de Jeu de Rôle ou les combats se déroulent en temps réel. \r\n');
+INSERT INTO `lexique` VALUES (25, 'RPG classique:', 'catégorie de Jeu  de Rôle la ou les combats se déroulent au tour par tour, avec une longue liste d''attaques disponibles.\r\n');
+INSERT INTO `lexique` VALUES (26, 'Sauvegarde:', 'concept qui consiste a enregistrer la progression du joueur dans son jeu afin que, après avoir arrête le jeu, il puisse reprendre sa partie là ou il l''a sauvegardée.\r\n');
+INSERT INTO `lexique` VALUES (27, 'Solution:', 'série d''actions, d''énigmes a déchiffrer, et de quêtes a accomplir afin de terminer le jeu.');
+INSERT INTO `lexique` VALUES (28, 'Sous-boss:', 'ennemis assez puissant que le héros doit vaincre avant d''affronter le boss. Les sous-boss sont généralement un peu moins puissants que les boss.\r\n');
+INSERT INTO `lexique` VALUES (29, 'Sous-quête:', 'série de petites quêtes que le héros doit accomplir pour arriver a la quête. \r\n');
+INSERT INTO `lexique` VALUES (30, 'Statistiques:', 'valeurs des aptitudes des personnages et ennemis, quand ils sont en combat. Ces valeurs sont généralement l''attaque, la défense, la précision, la vitesse   points de vie (PV),le niveau etc.. . D''autres paramètres peuvent entrer en fonction du jeu. Ces valeurs peuvent augmenter ou diminuer.\r\n');
+INSERT INTO `lexique` VALUES (31, 'Statut:', 'valeurs qui témoignent de la santé du héros. Ces valeurs sont généralement la paralysie, l''empoisonnement, le sommeil, la brûlure, ou la congélation. \r\n');
+INSERT INTO `lexique` VALUES (32, 'Tactical RPG:', 'type de Jeu de Rôle qui ressemble de près a un jeu de stratégie. Les personnages se déplacent sur un carte couverte de cases comme un échiquier . Chaque personnage a le droit de se déplacer sur un nombre de cases bien précis, les attaques a utiliser dépendent  de la case ou le joueur se trouve.\r\n');
+INSERT INTO `lexique` VALUES (33, 'Ville:', 'endroit ou le héros doit aller pour diverses raisons  comme: atteindre un but qui se trouve dans cette ville, se soigner, acheter des objets, ou participer a des activités annexes.');
+
+-- --------------------------------------------------------
+
+-- 
+-- Structure de la table `outils_rpgxp`
+-- 
+
+CREATE TABLE `outils_rpgxp` (
+  `id` int(11) NOT NULL auto_increment,
+  `titre` varchar(35) NOT NULL default '',
+  `des` text NOT NULL,
+  `lien` varchar(45) NOT NULL default '',
+  PRIMARY KEY  (`id`)
+) ENGINE=MyISAM DEFAULT CHARSET=latin1 AUTO_INCREMENT=2 ;
+
+-- 
+-- Contenu de la table `outils_rpgxp`
+-- 
+
+INSERT INTO `outils_rpgxp` VALUES (1, 'Ressources Wizard', 'Logicel qui convertie les ressources RPG Maker 2000 ou 2003 en ressources pour RPG Maker Xp. Son seul defauts c''est que els ressources a convertir doivent imperativement appartenir a un projet.', '');
+
+-- --------------------------------------------------------
+
+-- 
+-- Structure de la table `scripts`
+-- 
+
+CREATE TABLE `scripts` (
+  `id` int(11) NOT NULL auto_increment,
+  `titre` varchar(45) NOT NULL default '',
+  `type` varchar(15) NOT NULL default '',
+  `lien` varchar(35) NOT NULL default '',
+  PRIMARY KEY  (`id`)
+) ENGINE=MyISAM DEFAULT CHARSET=latin1 AUTO_INCREMENT=8 ;
+
+-- 
+-- Contenu de la table `scripts`
+-- 
+
+INSERT INTO `scripts` VALUES (1, '[Combat]: Interface de combat plus jolie', 'combat', 'scripts/scene_battle.html');
+INSERT INTO `scripts` VALUES (3, '[Map]Nom de la carte sur l''ecran', 'Map', 'scripts/window_map_name.html');
+INSERT INTO `scripts` VALUES (2, '[Heros]: Heros qui se suivent', 'Heros', 'scripts/train_actor.html');
+
+-- --------------------------------------------------------
+
+-- 
+-- Structure de la table `tuto_jeux`
+-- 
+
+CREATE TABLE `tuto_jeux` (
+  `id` int(11) NOT NULL auto_increment,
+  `titre` varchar(35) NOT NULL default '',
+  `des` text NOT NULL,
+  `lien` varchar(45) NOT NULL default '',
+  PRIMARY KEY  (`id`)
+) ENGINE=MyISAM DEFAULT CHARSET=latin1 AUTO_INCREMENT=5 ;
+
+-- 
+-- Contenu de la table `tuto_jeux`
+-- 
+
+INSERT INTO `tuto_jeux` VALUES (1, 'Le graphisme', 'Vosu voulez av oir une petite iddée en ce qui conserne la creation graphique, ce tuto est la pour vous.', 'making/tuto_jeux/graphisme.html');
+INSERT INTO `tuto_jeux` VALUES (2, 'Construction de l''équipe:', 'Ce tutorial vous apprends les differents postes dnas un equipe de developement d''un jeu.', 'making/tuto_jeux/equipe.html');
+INSERT INTO `tuto_jeux` VALUES (3, 'Organisation d''un equipe', 'Ce tutorial a pour but de vous apprendre a gerer une equipe de develeppement pour que sa ne soit pas le bazzar dans vote studio.', 'making/tuto_jeux/organiser_equipe.html');
+INSERT INTO `tuto_jeux` VALUES (4, 'le site offciel de votre jeu', 'Toutes les conseils et les information necessaires pour faire un bon site offciel.', 'making/tuto_jeux/site.html');
+
+-- --------------------------------------------------------
+
+-- 
+-- Structure de la table `tuto_rpg`
+-- 
+
+CREATE TABLE `tuto_rpg` (
+  `id` int(11) NOT NULL auto_increment,
+  `titre` varchar(45) NOT NULL default '',
+  `des` text NOT NULL,
+  PRIMARY KEY  (`id`)
+) ENGINE=MyISAM DEFAULT CHARSET=latin1 AUTO_INCREMENT=3 ;
+
+-- 
+-- Contenu de la table `tuto_rpg`
+-- 
+
+
+-- --------------------------------------------------------
+
+-- 
+-- Structure de la table `tuto_xp`
+-- 
+
+CREATE TABLE `tuto_xp` (
+  `id` int(11) NOT NULL auto_increment,
+  `titre` varchar(45) NOT NULL default '',
+  `des` text NOT NULL,
+  `lien` varchar(45) NOT NULL default '',
+  PRIMARY KEY  (`id`)
+) ENGINE=MyISAM DEFAULT CHARSET=latin1 AUTO_INCREMENT=7 ;
+
+-- 
+-- Contenu de la table `tuto_xp`
+-- 
+
+INSERT INTO `tuto_xp` VALUES (1, 'Paroles Aleatoire', 'Rendez vos PNJ moins previsibles avec un system de paroles aleatoires.', 'tuto_xp/tuto_random_paroles.html');
+INSERT INTO `tuto_xp` VALUES (2, 'Afficher les visages dans les messages', 'Vous pourrez grace a ce cour afficher le visage de celui qui parle.', 'tuto_xp/tuto_visages.html');
+INSERT INTO `tuto_xp` VALUES (3, 'Faire votre propre jeux Pokemon', 'les fans de Pokemon serons ravis cas il pourrons ce faire le jeux pokemon de leur reve.', '');
+        

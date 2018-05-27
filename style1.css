@@ -1,0 +1,90 @@
+
+.Menu_Titre {
+	BORDER-RIGHT: 0px; 
+	PADDING-RIGHT: 3px; 
+	BORDER-TOP: 0px; 
+	
+	PADDING-LEFT: 3px; 
+	FONT-WEIGHT: bold; 
+	FONT-SIZE: 15px; 
+	PADDING-BOTTOM: 3px; 
+	MARGIN-LEFT: auto; 
+	BORDER-LEFT: 0px; 
+	WIDTH: 135px; 
+	COLOR: #000; 
+	MARGIN-RIGHT: auto; 
+	PADDING-TOP: 3px; BORDER-BOTTOM: 0px; 
+	FONT-FAMILY: Helvetica, Verdana, Arial, Serif;
+	background-color:#99CC33;
+	
+}
+.Contenu_Titre1 {
+	font-family: Verdana, Arial, Helvetica, sans-serif;
+	font-size: 14px;
+	color: #00000;
+	font-weight: bold;
+}
+.Contenu_Titre2 {
+	font-size: 18px;
+	font-family: Arial, Helvetica, sans-serif;
+	color: #487055;
+}
+.Section_Titre {
+	color: #FFFFFF;
+	font-weight: bold;
+	font-family: Verdana, Arial, Helvetica, sans-serif;
+	font-size: 14px;
+}
+.Contenu_Titre3 {
+	color: #00000;
+	font-weight: bold;
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 14px;
+}
+.Contenu_Texte {
+	color: #333333;
+	font-size: 13px;
+	font-family:sans-serif;
+}
+.lien_menu {color: #487055; 
+    font-family: Arial, Helvetica, sans-serif; 
+    font-size: 12px; 
+    WIDTH: 135px;
+    PADDING-TOP: 3px; BORDER-BOTTOM: 0px; 
+	PADDING-LEFT: 6px; 
+	PADDING-RIGHT: 6px; 
+	}
+	
+.Bas_Remarque {
+	font-size: 12px;
+	font-family: Verdana, Arial, Helvetica, sans-serif;
+}
+a {
+font-size: 12px;
+	font-family: Arial, Helvetica, sans-serif;
+	color: #487055;
+}
+a:link {
+	font-size: 12px;
+	text-decoration: none;
+	color: #487055;
+}
+a:visited {
+font-size: 12px;
+	text-decoration: none;
+	color:#487055;
+}
+a:hover {
+font-size: 12px;
+    font-weight: bold;
+	text-decoration: none;
+	color: #487055;
+}
+a:active {
+font-size: 12px;
+	text-decoration: none;
+	color: #487055;
+}
+body {
+	background-color: #EEEEEE;
+}

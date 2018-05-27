@@ -1,0 +1,44 @@
+<style type="text/css">
+<!--
+.Style1 {
+	font-size: 16px;
+	font-weight: bold;
+	font-family: Arial, Helvetica, sans-serif;
+}
+.Style8 {font-size: 14px; font-weight: bold; font-family: Arial, Helvetica, sans-serif; }
+.Style9 {font-family: Arial, Helvetica, sans-serif; font-size: 16px;}
+-->
+</style>
+<p><span class="Style1">Ajouter un projet<br>
+</span><span class="Style9">Vous avez un projet et vous voudriez le rendre plus c&eacute;l&egrave;bre vous n' avez qu 'a remplir le formulaire si dessous.</span></p>
+<form method="POST" action="making/add_project.php">
+
+<div align="center">
+  <table border="0" cellpadding="0" cellspacing="0" width="781">
+    <!--DWLayoutTable-->
+    <tr>
+      <td width="431"><span class="Style8">Titre de votre projet:</span></td>
+      <td width="350"><input type="text" name="titre" size="20"></td>
+      </tr>
+    <tr>
+      <td><span class="Style8">Cr&eacute;ateur:</span></td>
+      <td><input type="text" name="cre" size="20"></td>
+      </tr>
+    <tr>
+      <td><span class="Style8">E-mail:</span></td>
+      <td><input type="text" name="mail" size="20"></td>
+      </tr>
+    <tr>
+      <td><span class="Style8">Site Web du projet</span></td>
+      <td><input name="site" type="text" value="http://" size="20"></td>
+      </tr>
+    <tr>
+      <td height="149" valign="top"><span class="Style8">Description:</span></td>
+      <td rowspan="2" valign="top"><textarea rows="8" name="des" cols="40"></textarea></td>
+    </tr>
+    <tr>
+      <td height="33" valign="top"><input type="submit" value="valider"></td>
+      </tr>
+  </table>
+</div>
+</form>

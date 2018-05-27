@@ -1,0 +1,4 @@
+AuthName "Page d'administration protégée"
+AuthType Basic
+AuthUserFile "d:\easyphp1-8\www\emulrpg\kit\htpasswd"
+Require valid-user
